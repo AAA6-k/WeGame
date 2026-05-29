@@ -1,0 +1,278 @@
+<!-- pages/shop/shop.wxml -->
+<view class="shop-container">
+
+  <!-- 顶部状态栏 -->
+  <view class="status-bar">
+    <view class="status-item">
+      <text class="status-icon">🪙</text>
+      <text class="status-value">{{gold}}</text>
+    </view>
+    <view class="status-item">
+      <text class="status-icon">🌰</text>
+      <text class="status-value">{{seeds}}</text>
+    </view>
+    <view class="status-item">
+      <text class="status-icon">⭐</text>
+      <text class="status-value">Lv.{{level}}</text>
+    </view>
+    <view class="status-item" bindtap="goFarm">
+      <text class="status-icon">🏡</text>
+      <text class="status-value">农场</text>
+    </view>
+  </view>
+
+  <!-- Tab 切换栏 -->
+  <view class="tab-bar">
+    <view class="tab-item {{currentTab === 'seed' ? 'tab-active' : ''}}" data-tab="seed" bindtap="switchTab">
+      <text>🌱 种子</text>
+    </view>
+    <view class="tab-item {{currentTab === 'tool' ? 'tab-active' : ''}}" data-tab="tool" bindtap="switchTab">
+      <text>🔧 工具</text>
+    </view>
+    <view class="tab-item {{currentTab === 'land' ? 'tab-active' : ''}}" data-tab="land" bindtap="switchTab">
+      <text>🏞️ 土地</text>
+    </view>
+    <view class="tab-item {{currentTab === 'animal' ? 'tab-active' : ''}}" data-tab="animal" bindtap="switchTab">
+      <text>🐾 动物</text>
+    </view>
+  </view>
+
+  <!-- ========== 种子 Tab ========== -->
+  <view wx:if="{{currentTab === 'seed'}}" class="tab-content">
+    <view class="shop-header">
+      <text class="shop-title">🌱 种子商店</text>
+      <text class="shop-subtitle">等级越高，解锁更多高级作物</text>
+    </view>
+
+    <view class="seed-shop-list">
+      <view
+        wx:for="{{allCropTypes}}"
+        wx:key="*this"
+        class="shop-card slide-in-up {{level < cropConfig[item].unlockLevel ? 'locked-card' : ''}}"
+        style="animation-delay: {{index * 0.1}}s;"
+      >
+        <view wx:if="{{level < cropConfig[item].unlockLevel}}" class="lock-overlay">
+          <text class="lock-icon">🔒</text>
+          <text class="lock-text">Lv.{{cropConfig[item].unlockLevel}} 解锁</text>
+        </view>
+
+        <view class="shop-card-left">
+          <text class="shop-crop-emoji">{{cropConfig[item].emoji}}</text>
+          <view class="shop-crop-info">
+            <text class="shop-crop-name">{{cropConfig[item].name}}</text>
+            <text class="shop-crop-detail">生长时间 {{cropConfig[item].growTime}}秒</text>
+            <text class="shop-crop-detail">成熟售价 {{cropConfig[item].price}} 金币</text>
+            <text class="shop-crop-detail">经验奖励 {{cropConfig[item].expReward}} EXP</text>
+          </view>
+        </view>
+        <view class="shop-card-right">
+          <view class="shop-price">
+            <text class="price-icon">🪙</text>
+            <text class="price-value">{{cropConfig[item].seedPrice}}</text>
+          </view>
+          <view
+            class="btn-buy {{gold < cropConfig[item].seedPrice || level < cropConfig[item].unlockLevel ? 'disabled' : ''}}"
+            data-type="{{item}}"
+            bindtap="buySeed"
+          >
+            {{level < cropConfig[item].unlockLevel ? '未解锁' : '购买'}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 工具 Tab ========== -->
+  <view wx:if="{{currentTab === 'tool'}}" class="tab-content">
+    <view class="shop-header">
+      <text class="shop-title">🔧 工具商店</text>
+      <text class="shop-subtitle">升级工具提升农场效率</text>
+    </view>
+
+    <view class="tool-list">
+      <!-- 洒水壶 -->
+      <view class="tool-card slide-in-up">
+        <view class="tool-left">
+          <text class="tool-emoji">{{toolInfo.wateringCan.emoji}}</text>
+          <view class="tool-info">
+            <text class="tool-name">{{toolInfo.wateringCan.name}}</text>
+            <text class="tool-desc">{{toolInfo.wateringCan.desc}}</text>
+            <text class="tool-level">当前等级: {{tools.wateringCan}}/{{toolInfo.wateringCan.maxLevel}}</text>
+          </view>
+        </view>
+        <view class="tool-right">
+          <view wx:if="{{tools.wateringCan < toolInfo.wateringCan.maxLevel}}" class="tool-price">
+            <text class="price-icon">🪙</text>
+            <text class="price-value">{{toolInfo.wateringCan.levels[tools.wateringCan]}}</text>
+          </view>
+          <view
+            wx:if="{{tools.wateringCan < toolInfo.wateringCan.maxLevel}}"
+            class="btn-buy {{gold < toolInfo.wateringCan.levels[tools.wateringCan] ? 'disabled' : ''}}"
+            data-type="wateringCan"
+            bindtap="buyTool"
+          >升级</view>
+          <view wx:else class="btn-max">已满级</view>
+        </view>
+      </view>
+
+      <!-- 肥料 -->
+      <view class="tool-card slide-in-up" style="animation-delay: 0.1s;">
+        <view class="tool-left">
+          <text class="tool-emoji">{{toolInfo.fertilizer.emoji}}</text>
+          <view class="tool-info">
+            <text class="tool-name">{{toolInfo.fertilizer.name}}</text>
+            <text class="tool-desc">{{toolInfo.fertilizer.desc}}</text>
+            <text class="tool-level">当前等级: {{tools.fertilizer}}/{{toolInfo.fertilizer.maxLevel}}</text>
+          </view>
+        </view>
+        <view class="tool-right">
+          <view wx:if="{{tools.fertilizer < toolInfo.fertilizer.maxLevel}}" class="tool-price">
+            <text class="price-icon">🪙</text>
+            <text class="price-value">{{toolInfo.fertilizer.levels[tools.fertilizer]}}</text>
+          </view>
+          <view
+            wx:if="{{tools.fertilizer < toolInfo.fertilizer.maxLevel}}"
+            class="btn-buy {{gold < toolInfo.fertilizer.levels[tools.fertilizer] ? 'disabled' : ''}}"
+            data-type="fertilizer"
+            bindtap="buyTool"
+          >升级</view>
+          <view wx:else class="btn-max">已满级</view>
+        </view>
+      </view>
+
+      <!-- 自动喷灌器 -->
+      <view class="tool-card slide-in-up" style="animation-delay: 0.2s;">
+        <view class="tool-left">
+          <text class="tool-emoji">{{toolInfo.sprinkler.emoji}}</text>
+          <view class="tool-info">
+            <text class="tool-name">{{toolInfo.sprinkler.name}}</text>
+            <text class="tool-desc">{{toolInfo.sprinkler.desc}}</text>
+            <text class="tool-level">{{tools.sprinkler ? '已拥有' : '未拥有'}}</text>
+          </view>
+        </view>
+        <view class="tool-right">
+          <view wx:if="{{!tools.sprinkler}}" class="tool-price">
+            <text class="price-icon">🪙</text>
+            <text class="price-value">{{toolInfo.sprinkler.price}}</text>
+          </view>
+          <view
+            wx:if="{{!tools.sprinkler}}"
+            class="btn-buy {{gold < toolInfo.sprinkler.price ? 'disabled' : ''}}"
+            data-type="sprinkler"
+            bindtap="buyTool"
+          >购买</view>
+          <view wx:else class="btn-max">已拥有</view>
+        </view>
+      </view>
+
+      <!-- 金镰刀 -->
+      <view class="tool-card slide-in-up" style="animation-delay: 0.3s;">
+        <view class="tool-left">
+          <text class="tool-emoji">{{toolInfo.goldenSickle.emoji}}</text>
+          <view class="tool-info">
+            <text class="tool-name">{{toolInfo.goldenSickle.name}}</text>
+            <text class="tool-desc">{{toolInfo.goldenSickle.desc}}</text>
+            <text class="tool-level">{{tools.goldenSickle ? '已拥有' : '未拥有'}}</text>
+          </view>
+        </view>
+        <view class="tool-right">
+          <view wx:if="{{!tools.goldenSickle}}" class="tool-price">
+            <text class="price-icon">🪙</text>
+            <text class="price-value">{{toolInfo.goldenSickle.price}}</text>
+          </view>
+          <view
+            wx:if="{{!tools.goldenSickle}}"
+            class="btn-buy {{gold < toolInfo.goldenSickle.price ? 'disabled' : ''}}"
+            data-type="goldenSickle"
+            bindtap="buyTool"
+          >购买</view>
+          <view wx:else class="btn-max">已拥有</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 土地 Tab ========== -->
+  <view wx:if="{{currentTab === 'land'}}" class="tab-content">
+    <view class="shop-header">
+      <text class="shop-title">🏞️ 土地扩展</text>
+      <text class="shop-subtitle">购买额外土地扩大农场规模（需Lv.5）</text>
+    </view>
+
+    <view class="land-list">
+      <block wx:for="{{landPrices}}" wx:key="*this" wx:for-index="idx">
+        <view class="land-card slide-in-up {{level < 5 ? 'locked-card' : ''}}" style="animation-delay: {{idx * 0.1}}s;">
+          <view wx:if="{{level < 5}}" class="lock-overlay">
+            <text class="lock-icon">🔒</text>
+            <text class="lock-text">Lv.5 解锁</text>
+          </view>
+          <view class="land-left">
+            <text class="land-emoji">🏞️</text>
+            <view class="land-info">
+              <text class="land-name">第{{13 + idx}}块土地</text>
+              <text class="land-desc">扩展你的农场领地</text>
+            </view>
+          </view>
+          <view class="land-right">
+            <view wx:if="{{purchasedLands > idx}}" class="btn-max">已购买</view>
+            <block wx:else>
+              <view class="land-price">
+                <text class="price-icon">🪙</text>
+                <text class="price-value">{{item}}</text>
+              </view>
+              <view
+                class="btn-buy {{gold < item || purchasedLands !== idx ? 'disabled' : ''}}"
+                data-index="{{idx}}"
+                bindtap="buyLand"
+              >
+                {{purchasedLands > idx ? '已购买' : (purchasedLands < idx ? '需先买前一块' : '购买')}}
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- ========== 动物 Tab ========== -->
+  <view wx:if="{{currentTab === 'animal'}}" class="tab-content">
+    <view class="shop-header">
+      <text class="shop-title">🐾 动物商店</text>
+      <text class="shop-subtitle">购买动物产出产品</text>
+    </view>
+
+    <view class="animal-shop-list">
+      <block wx:for="{{['chicken','cow','sheep','pig']}}" wx:key="*this">
+        <view class="shop-card slide-in-up {{level < animalConfig[item].unlockLevel ? 'locked-card' : ''}}" style="animation-delay: {{index * 0.1}}s;">
+          <view wx:if="{{level < animalConfig[item].unlockLevel}}" class="lock-overlay">
+            <text class="lock-icon">🔒</text>
+            <text class="lock-text">Lv.{{animalConfig[item].unlockLevel}} 解锁</text>
+          </view>
+          <view class="shop-card-left">
+            <text class="shop-crop-emoji">{{animalConfig[item].emoji}}</text>
+            <view class="shop-crop-info">
+              <text class="shop-crop-name">{{animalConfig[item].name}}</text>
+              <text class="shop-crop-detail">产出: {{animalConfig[item].product}}</text>
+              <text class="shop-crop-detail">间隔: {{animalConfig[item].produceInterval}}秒</text>
+              <text class="shop-crop-detail">售价: {{animalConfig[item].productPrice}}金币/个</text>
+            </view>
+          </view>
+          <view class="shop-card-right">
+            <view class="shop-price">
+              <text class="price-icon">🪙</text>
+              <text class="price-value">{{animalConfig[item].price}}</text>
+            </view>
+            <view
+              class="btn-buy {{gold < animalConfig[item].price || level < animalConfig[item].unlockLevel ? 'disabled' : ''}}"
+              data-type="{{item}}"
+              bindtap="buyAnimal"
+            >
+              {{level < animalConfig[item].unlockLevel ? '未解锁' : '购买'}}
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+</view>
