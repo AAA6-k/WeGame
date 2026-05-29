@@ -1,0 +1,90 @@
+<!-- pages/animals/animals.wxml -->
+<view class="animals-container">
+
+  <view class="status-bar">
+    <text class="status-item">🪙 {{gold}}</text>
+    <text class="status-item">🌰 {{seeds}}</text>
+    <text class="status-item">⭐ Lv.{{level}}</text>
+  </view>
+
+  <view class="section-header">
+    <text class="section-title">🐾 我的动物</text>
+    <view class="btn-buy-animal" bindtap="toggleBuy">
+      <text>{{showBuyArea ? '收起' : '购买动物'}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{animals.length === 0}}" class="empty-state">
+    <text class="empty-icon">🐾</text>
+    <text class="empty-text">还没有动物</text>
+    <text class="empty-hint">点击「购买动物」按钮开始养殖吧！</text>
+  </view>
+
+  <view wx:if="{{animals.length > 0}}" class="animal-grid">
+    <view
+      wx:for="{{animals}}" wx:key="id" wx:for-index="idx"
+      class="animal-card {{item.productReady ? 'ready' : ''}}"
+      data-index="{{idx}}"
+      bindtap="onAnimalTap">
+
+      <view wx:if="{{item.productReady}}" class="ready-badge">
+        <text>可收取</text>
+      </view>
+
+      <text class="animal-emoji">{{item.emoji}}</text>
+      <text class="animal-name">{{item.name}}</text>
+
+      <view wx:if="{{!item.productReady && item.lastFeedTime > 0}}" class="animal-progress">
+        <text class="progress-label">产出中...</text>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{item.produceInterval > 0 ? (100 - (item._r || 0) / item.produceInterval * 100) : 100}}%;"></view>
+        </view>
+        <text class="progress-time">{{item._r > 0 ? (item._r + '秒') : '即将完成'}}</text>
+      </view>
+
+      <view wx:elif="{{!item.productReady && item.lastFeedTime <= 0}}" class="animal-need-feed">
+        <text class="need-feed-text">需要喂食 🌰</text>
+      </view>
+
+      <view wx:else class="animal-ready-text">
+        <text>点击收取！</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showBuyArea}}" class="buy-section">
+    <text class="buy-title">🛒 购买新动物</text>
+    <text class="buy-subtitle">购买后请在农场主页喂食和收取产物</text>
+
+    <block wx:for="{{['chicken','cow','sheep','pig']}}" wx:key="*this">
+      <view class="buy-card {{level < animalConfig[item].unlockLevel ? 'locked' : ''}}">
+        <view wx:if="{{level < animalConfig[item].unlockLevel}}" class="buy-lock">
+          <text>🔒 Lv.{{animalConfig[item].unlockLevel}} 解锁</text>
+        </view>
+        <view class="buy-left">
+          <text class="buy-emoji">{{animalConfig[item].emoji}}</text>
+          <view class="buy-info">
+            <text class="buy-name">{{animalConfig[item].name}}</text>
+            <text class="buy-detail">产出: {{animalConfig[item].product}} ({{animalConfig[item].produceInterval}}秒)</text>
+          </view>
+        </view>
+        <view class="buy-right">
+          <view class="buy-price-row">
+            <text class="price-icon">🪙</text>
+            <text class="price-value">{{animalConfig[item].price}}</text>
+          </view>
+          <view
+            class="buy-btn {{gold < animalConfig[item].price || level < animalConfig[item].unlockLevel ? 'disabled' : ''}}"
+            data-type="{{item}}"
+            bindtap="buyAnimal"
+          >{{level < animalConfig[item].unlockLevel ? '未解锁' : '购买'}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="bottom-nav" bindtap="goShop">
+    <text>🛒 去商店买更多商品</text>
+  </view>
+
+</view>

@@ -1,0 +1,153 @@
+<!-- pages/index/index.wxml -->
+<view class="farm-container">
+
+  <!-- 顶部状态栏 -->
+  <view class="status-bar">
+    <view class="status-left">
+      <text class="status-gold">🪙 {{gold}}</text>
+      <text class="status-seeds">🌰 {{seeds}}</text>
+      <text class="status-level">⭐ Lv.{{level}}</text>
+    </view>
+    <view class="status-right">
+      <view class="exp-wrapper">
+        <text class="exp-text">EXP {{exp}}/{{expMax}}</text>
+        <view class="exp-bar">
+          <view class="exp-fill" style="width: {{expPercent}}%;"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮栏 -->
+  <view class="action-bar">
+    <view class="action-btn {{breedMode ? 'action-active' : ''}}" bindtap="toggleBreedMode">
+      <text>🧬 杂交</text>
+    </view>
+    <view class="action-btn" bindtap="goShop">
+      <text>🛒 商店</text>
+    </view>
+    <view class="action-btn" bindtap="goSkill">
+      <text>⭐ 技能</text>
+    </view>
+    <view class="action-btn" bindtap="goKitchen">
+      <text>🍳 厨房</text>
+    </view>
+  </view>
+
+  <!-- 种子选择弹窗 -->
+  <view wx:if="{{showSeedPicker}}" class="seed-picker-overlay" catchtap="closeSeedPicker">
+    <view class="seed-picker" catchtap>
+      <text class="picker-title">🌱 选择要种植的种子</text>
+      <view class="picker-grid">
+        <view
+          wx:for="{{availableCropTypes}}" wx:key="*this"
+          class="picker-item"
+          data-type="{{item}}"
+          bindtap="onSelectSeed">
+          <text class="picker-emoji">{{cropConfig[item].emoji}}</text>
+          <text class="picker-name">{{cropConfig[item].name}}</text>
+        </view>
+      </view>
+      <view class="picker-close" bindtap="closeSeedPicker">取消</view>
+    </view>
+  </view>
+
+  <!-- 土地网格 -->
+  <view class="land-section">
+    <text class="section-title">🌾 我的农场</text>
+    <view class="land-grid">
+      <view
+        wx:for="{{lands}}" wx:key="id"
+        class="land-cell {{item.stage === 0 ? 'land-empty' : ''}} {{item.stage === 4 ? 'land-mature' : ''}} {{level < item.unlockLevel ? 'land-locked' : ''}} {{item.purchased === false ? 'land-unpurchased' : ''}} {{item.selected ? 'land-selected' : ''}}"
+        data-id="{{item.id}}" bindtap="onLandTap">
+
+        <!-- 未解锁 -->
+        <view wx:if="{{level < item.unlockLevel}}" class="land-locked-overlay">
+          <text class="lock-icon">🔒</text>
+          <text class="lock-text">Lv.{{item.unlockLevel}}</text>
+        </view>
+
+        <!-- 未购买（额外土地） -->
+        <view wx:elif="{{item.purchased === false}}" class="land-locked-overlay land-buy-overlay">
+          <text class="lock-icon">🏷️</text>
+          <text class="lock-text">商店购买</text>
+        </view>
+
+        <!-- 空地 -->
+        <view wx:elif="{{item.stage === 0}}" class="land-content land-empty-content">
+          <text class="land-empty-icon">🟫</text>
+          <text class="land-empty-text">点击种菜</text>
+        </view>
+
+        <!-- 种子阶段 -->
+        <view wx:elif="{{item.stage === 1}}" class="land-content">
+          <view wx:if="{{plantAnimations.indexOf(item.id) > -1}}" class="plant-animation">
+            <text class="seed-falling">🌰</text>
+            <view class="soil-burst"></view>
+          </view>
+          <view wx:else class="crop-stage stage-seed">
+            <text class="crop-emoji">🌰</text>
+            <text class="stage-label">种子</text>
+            <view class="progress-bar"><view class="progress-fill" style="width: 10%;"></view></view>
+          </view>
+        </view>
+
+        <!-- 幼苗阶段 -->
+        <view wx:elif="{{item.stage === 2}}" class="land-content">
+          <view class="crop-stage stage-sprout">
+            <text class="crop-emoji sprout-grow">🌱</text>
+            <text class="stage-label">幼苗</text>
+            <view class="progress-bar"><view class="progress-fill" style="width: 35%;"></view></view>
+          </view>
+        </view>
+
+        <!-- 成长中阶段 -->
+        <view wx:elif="{{item.stage === 3}}" class="land-content">
+          <view class="crop-stage stage-growing">
+            <text class="crop-emoji growing-sway">🌿</text>
+            <text class="stage-label">成长中</text>
+            <view class="progress-bar"><view class="progress-fill" style="width: 70%;"></view></view>
+          </view>
+        </view>
+
+        <!-- 成熟阶段 -->
+        <view wx:elif="{{item.stage === 4}}" class="land-content">
+          <view class="crop-stage stage-mature">
+            <text class="crop-emoji mature-bounce">{{cropConfig[item.cropType].emoji}}</text>
+            <text class="stage-label harvest-label">点击收获</text>
+          </view>
+        </view>
+
+        <!-- 浇水提示 -->
+        <view wx:if="{{item.stage >= 1 && item.stage <= 3 && !item.watered}}" class="water-icon">
+          <text>💧</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 动物区域 -->
+  <view wx:if="{{showAnimalArea}}" class="animal-section">
+    <text class="section-title">🐾 动物栏</text>
+    <view class="animal-grid">
+      <view
+        wx:for="{{animals}}" wx:key="id"
+        class="animal-card {{item.productReady ? 'animal-ready' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onAnimalTap">
+        <text class="animal-emoji">{{item.emoji}}</text>
+        <text class="animal-name">{{item.name}}</text>
+        <view wx:if="{{item.productReady}}" class="animal-badge">
+          <text class="badge-text">可收取</text>
+        </view>
+        <view wx:else class="animal-status">
+          <text class="animal-status-text">需要喂食</text>
+        </view>
+      </view>
+    </view>
+    <view class="animal-tip">
+      <text>💡 点击动物：有产物时可收取，否则喂食（消耗1颗种子）</text>
+    </view>
+  </view>
+
+</view>
