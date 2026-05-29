@@ -1,0 +1,104 @@
+<!-- pages/shop/shop.wxml -->
+<view class="shop-container">
+
+  <!-- 顶部状态栏 -->
+  <view class="status-bar">
+    <view class="status-item">
+      <text class="status-icon">🪙</text>
+      <text class="status-value">{{gold}}</text>
+    </view>
+    <view class="status-item">
+      <text class="status-icon">🌰</text>
+      <text class="status-value">{{seeds}}</text>
+    </view>
+    <view class="status-item">
+      <text class="status-icon">⭐</text>
+      <text class="status-value">Lv.{{level}}</text>
+    </view>
+    <view class="status-item" bindtap="goFarm">
+      <text class="status-icon">🏡</text>
+      <text class="status-value">农场</text>
+    </view>
+  </view>
+
+  <!-- 商店标题 -->
+  <view class="shop-header">
+    <text class="shop-title">🏪 种子商店 🏪</text>
+    <text class="shop-subtitle">等级越高，解锁更多高级作物</text>
+  </view>
+
+  <!-- 种子列表 -->
+  <view class="seed-shop-list">
+    <view
+      wx:for="{{allCropTypes}}"
+      wx:key="*this"
+      class="shop-card slide-in-up {{level < cropConfig[item].unlockLevel ? 'locked-card' : ''}}"
+      style="animation-delay: {{index * 0.1}}s;"
+    >
+      <!-- 未解锁遮罩 -->
+      <view wx:if="{{level < cropConfig[item].unlockLevel}}" class="lock-overlay">
+        <text class="lock-icon">🔒</text>
+        <text class="lock-text">Lv.{{cropConfig[item].unlockLevel}} 解锁</text>
+      </view>
+
+      <view class="shop-card-left">
+        <text class="shop-crop-emoji">{{cropConfig[item].emoji}}</text>
+        <view class="shop-crop-info">
+          <text class="shop-crop-name">{{cropConfig[item].name}}</text>
+          <text class="shop-crop-detail">生长时间 {{cropConfig[item].growTime}}秒</text>
+          <text class="shop-crop-detail">成熟售价 {{cropConfig[item].price}} 金币</text>
+          <text class="shop-crop-detail">经验奖励 {{cropConfig[item].expReward}} EXP</text>
+        </view>
+      </view>
+      <view class="shop-card-right">
+        <view class="shop-price">
+          <text class="price-icon">🪙</text>
+          <text class="price-value">{{cropConfig[item].seedPrice}}</text>
+        </view>
+        <view
+          class="btn-buy {{gold < cropConfig[item].seedPrice || level < cropConfig[item].unlockLevel ? 'disabled' : ''}}"
+          data-type="{{item}}"
+          bindtap="buySeed"
+        >
+          {{level < cropConfig[item].unlockLevel ? '未解锁' : '购买'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 等级解锁说明 -->
+  <view class="level-guide">
+    <view class="guide-card">
+      <text class="guide-title">📈 等级解锁表</text>
+      <view class="guide-row">
+        <text class="guide-level">Lv.1</text>
+        <text class="guide-desc">小麦、胡萝卜 (6块土地)</text>
+      </view>
+      <view class="guide-row">
+        <text class="guide-level">Lv.2</text>
+        <text class="guide-desc">番茄 (8块土地)</text>
+      </view>
+      <view class="guide-row">
+        <text class="guide-level">Lv.3</text>
+        <text class="guide-desc">玉米 (10块土地)</text>
+      </view>
+      <view class="guide-row">
+        <text class="guide-level">Lv.4</text>
+        <text class="guide-desc">草莓 (12块土地)</text>
+      </view>
+      <view class="guide-row">
+        <text class="guide-level">Lv.5</text>
+        <text class="guide-desc">西瓜</text>
+      </view>
+      <view class="guide-row">
+        <text class="guide-level">Lv.6</text>
+        <text class="guide-desc">南瓜</text>
+      </view>
+      <view class="guide-row">
+        <text class="guide-level">Lv.7</text>
+        <text class="guide-desc">向日葵</text>
+      </view>
+    </view>
+  </view>
+
+</view>
