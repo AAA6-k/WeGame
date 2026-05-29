@@ -1,0 +1,69 @@
+<!-- pages/shop/shop.wxml -->
+<view class="shop-container">
+
+  <!-- 顶部状态栏 -->
+  <view class="status-bar">
+    <view class="status-item">
+      <text class="status-icon">🪙</text>
+      <text class="status-value">{{gold}}</text>
+    </view>
+    <view class="status-item">
+      <text class="status-icon">🌰</text>
+      <text class="status-value">{{seeds}}</text>
+    </view>
+    <view class="status-item" bindtap="goFarm">
+      <text class="status-icon">🏡</text>
+      <text class="status-value">农场</text>
+    </view>
+  </view>
+
+  <!-- 商店标题 -->
+  <view class="shop-header">
+    <text class="shop-title">🏪 种子商店 🏪</text>
+    <text class="shop-subtitle">购买种子，播种希望</text>
+  </view>
+
+  <!-- 种子列表 -->
+  <view class="seed-shop-list">
+    <view
+      wx:for="{{cropTypes}}"
+      wx:key="*this"
+      class="shop-card slide-in-up"
+      style="animation-delay: {{index * 0.1}}s;"
+    >
+      <view class="shop-card-left">
+        <text class="shop-crop-emoji">{{cropConfig[item].emoji}}</text>
+        <view class="shop-crop-info">
+          <text class="shop-crop-name">{{cropConfig[item].name}}</text>
+          <text class="shop-crop-detail">生长时间 {{cropConfig[item].growTime}}秒</text>
+          <text class="shop-crop-detail">成熟售价 {{cropConfig[item].price}} 金币</text>
+        </view>
+      </view>
+      <view class="shop-card-right">
+        <view class="shop-price">
+          <text class="price-icon">🪙</text>
+          <text class="price-value">{{cropConfig[item].seedPrice}}</text>
+        </view>
+        <view
+          class="btn-buy {{gold < cropConfig[item].seedPrice ? 'disabled' : ''}}"
+          data-type="{{item}}"
+          bindtap="buySeed"
+        >
+          购买
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="shop-tips">
+    <view class="tip-card">
+      <text class="tip-title">💡 小贴士</text>
+      <text class="tip-text">· 点击空地选择种子即可种植</text>
+      <text class="tip-text">· 种植后点击作物可以浇水加速生长</text>
+      <text class="tip-text">· 浇水可减少 2 秒成长时间</text>
+      <text class="tip-text">· 成熟作物有晃动提示，点击即可收获</text>
+    </view>
+  </view>
+
+</view>

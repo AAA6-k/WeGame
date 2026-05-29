@@ -1,0 +1,483 @@
+/* pages/index/index.wxss */
+.farm-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #87CEEB 0%, #E8F5E9 30%, #C8E6C9 100%);
+  padding: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 状态栏 */
+.status-bar {
+  background: linear-gradient(135deg, #5D4037, #795548);
+  color: #FFF8E1;
+  padding: 20rpx 30rpx;
+  border-radius: 16rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 6rpx 16rpx rgba(62, 39, 15, 0.3);
+  margin-bottom: 10rpx;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.status-item:last-child {
+  cursor: pointer;
+}
+
+.status-icon {
+  font-size: 40rpx;
+  margin-right: 10rpx;
+}
+
+.status-value {
+  font-size: 30rpx;
+}
+
+/* 农场标题 */
+.farm-header {
+  text-align: center;
+  margin: 20rpx 0;
+}
+
+.farm-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #33691E;
+  display: block;
+}
+
+.farm-subtitle {
+  font-size: 22rpx;
+  color: #689F38;
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* 土地网格 */
+.land-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10rpx;
+}
+
+.land-cell {
+  width: 31%;
+  aspect-ratio: 1;
+  margin-bottom: 20rpx;
+  border-radius: 16rpx;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.land-cell:active {
+  transform: scale(0.95);
+}
+
+.land-empty {
+  background: linear-gradient(180deg, #A1887F, #8D6E63);
+  border: 4rpx dashed #6D4C41;
+}
+
+.land-mature {
+  background: linear-gradient(180deg, #8BC34A, #689F38);
+  border: 4rpx solid #FFD54F;
+  box-shadow: 0 4rpx 20rpx rgba(255, 193, 7, 0.4);
+}
+
+.land-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #8D6E63, #6D4C41);
+  position: relative;
+}
+
+.land-empty-content {
+  background: linear-gradient(180deg, #A1887F, #8D6E63);
+}
+
+.land-empty-icon {
+  font-size: 50rpx;
+}
+
+.land-empty-text {
+  font-size: 20rpx;
+  color: #EFEBE9;
+  margin-top: 4rpx;
+}
+
+/* 作物阶段 */
+.crop-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.crop-emoji {
+  font-size: 60rpx;
+  transition: all 0.3s;
+}
+
+.stage-label {
+  font-size: 20rpx;
+  color: #FFF8E1;
+  margin-top: 4rpx;
+}
+
+.ready-label {
+  color: #FFD54F;
+  font-weight: bold;
+  font-size: 22rpx;
+}
+
+/* 进度条 */
+.progress-bar {
+  width: 70%;
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4rpx;
+  margin-top: 8rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #66BB6A, #FFEB3B);
+  border-radius: 4rpx;
+  transition: width 0.8s ease-out;
+}
+
+/* === 种菜动画 === */
+.plant-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.seed-falling {
+  font-size: 50rpx;
+  animation: seedFallAnim 0.8s ease-in forwards;
+}
+
+.soil-burst {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, #8D6E63 20%, #5D4037 80%);
+  animation: soilBurstAnim 0.5s ease-out 0.6s both;
+}
+
+@keyframes seedFallAnim {
+  0% { transform: translateY(-150rpx) rotate(0deg); opacity: 0; }
+  60% { transform: translateY(10rpx) rotate(360deg); opacity: 1; }
+  80% { transform: translateY(-5rpx) rotate(380deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(360deg); opacity: 1; }
+}
+
+@keyframes soilBurstAnim {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(3); opacity: 0.8; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* 幼苗生长动画 */
+.sprout-grow {
+  animation: sproutGrowAnim 6s ease-out;
+}
+
+@keyframes sproutGrowAnim {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 成长摇摆动画 */
+.growing-sway {
+  animation: growingSwayAnim 3s ease-in-out infinite;
+}
+
+@keyframes growingSwayAnim {
+  0%, 100% { transform: rotate(-5deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.05); }
+}
+
+/* 成熟晃动提示 */
+.mature-shake {
+  animation: matureShakeAnim 0.6s ease-in-out infinite;
+  font-size: 70rpx;
+}
+
+@keyframes matureShakeAnim {
+  0%, 100% { transform: rotate(-8deg) scale(1); }
+  20% { transform: rotate(8deg) scale(1.1); }
+  40% { transform: rotate(-6deg) scale(1.05); }
+  60% { transform: rotate(6deg) scale(1.1); }
+  80% { transform: rotate(-3deg) scale(1.05); }
+}
+
+/* === 收菜动画 === */
+.harvest-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 215, 0, 0.2);
+  z-index: 10;
+}
+
+.crop-pulled {
+  font-size: 70rpx;
+  animation: harvestPullAnim 1s ease-out forwards;
+}
+
+@keyframes harvestPullAnim {
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+  40% { transform: translateY(-30rpx) scale(1.3) rotate(10deg); opacity: 1; }
+  100% { transform: translateY(-150rpx) scale(0) rotate(45deg); opacity: 0; }
+}
+
+/* 金币飞入动画 */
+.coin-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.coin-fly-anim {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  animation: coinFlyUpAnim 1s ease-out forwards;
+}
+
+.coin-icon {
+  font-size: 40rpx;
+}
+
+.coin-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+  margin-left: 4rpx;
+}
+
+@keyframes coinFlyUpAnim {
+  0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+  30% { transform: translate(20rpx, -30rpx) scale(1.3); opacity: 1; }
+  100% { transform: translate(-40rpx, -180rpx) scale(0.3); opacity: 0; }
+}
+
+/* === 浇水动画 === */
+.water-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.water-can {
+  position: absolute;
+  top: -20rpx;
+  right: 10rpx;
+  font-size: 40rpx;
+  animation: waterCanTilt 0.6s ease-in-out forwards;
+}
+
+@keyframes waterCanTilt {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(-45deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.water-drops {
+  position: absolute;
+  top: 30rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.drop {
+  position: absolute;
+  font-size: 24rpx;
+  animation: dropFallAnim 1s ease-in forwards;
+}
+
+.d1 { left: -10rpx; animation-delay: 0.2s; }
+.d2 { left: 10rpx; animation-delay: 0.5s; }
+.d3 { left: 0; animation-delay: 0.8s; }
+
+@keyframes dropFallAnim {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(50rpx); opacity: 1; }
+  100% { transform: translateY(80rpx); opacity: 0; }
+}
+
+/* 已浇水标记 */
+.watered-badge {
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
+  font-size: 18rpx;
+  color: #29B6F6;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8rpx;
+  padding: 2rpx 8rpx;
+  z-index: 5;
+}
+
+/* === 种子选择弹窗 === */
+.picker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.picker-dialog {
+  width: 85%;
+  max-width: 600rpx;
+  background: white;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 12rpx 40rpx rgba(0, 0, 0, 0.3);
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(100rpx); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.picker-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #33691E;
+  text-align: center;
+  margin-bottom: 8rpx;
+}
+
+.picker-subtitle {
+  font-size: 24rpx;
+  color: #757575;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.seed-list {
+  margin: 20rpx 0;
+}
+
+.seed-option {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border: 3rpx solid #E0E0E0;
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
+  transition: all 0.2s;
+}
+
+.seed-option.selected {
+  border-color: #4CAF50;
+  background: #F1F8E9;
+  box-shadow: 0 0 12rpx rgba(76, 175, 80, 0.3);
+}
+
+.seed-emoji {
+  font-size: 50rpx;
+  margin-right: 16rpx;
+}
+
+.seed-info {
+  flex: 1;
+}
+
+.seed-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+.seed-detail {
+  font-size: 22rpx;
+  color: #757575;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.picker-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
+
+.btn {
+  flex: 1;
+  padding: 20rpx;
+  text-align: center;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin: 0 10rpx;
+}
+
+.btn-cancel {
+  background: #EEEEEE;
+  color: #757575;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(46, 125, 50, 0.3);
+}
+
+.btn.disabled {
+  background: #BDBDBD;
+  color: #9E9E9E;
+  box-shadow: none;
+}

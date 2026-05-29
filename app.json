@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/shop/shop"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#4CAF50",
+    "navigationBarTitleText": "快乐农场",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#E8F5E9",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#757575",
+    "selectedColor": "#4CAF50",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "农场",
+        "iconPath": "images/farm.png",
+        "selectedIconPath": "images/farm_active.png"
+      },
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "商店",
+        "iconPath": "images/shop.png",
+        "selectedIconPath": "images/shop_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
