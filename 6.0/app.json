@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/shop/shop",
+    "pages/skill/skill",
+    "pages/kitchen/kitchen"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#4CAF50",
+    "navigationBarTitleText": "快乐农场",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#E8F5E9",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#757575",
+    "selectedColor": "#4CAF50",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "农场" },
+      { "pagePath": "pages/shop/shop", "text": "商店" },
+      { "pagePath": "pages/skill/skill", "text": "技能" },
+      { "pagePath": "pages/kitchen/kitchen", "text": "厨房" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
