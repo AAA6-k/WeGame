@@ -1,0 +1,48 @@
+<view class="skill-page">
+  <view class="skill-header">
+    <text class="skill-header-title">技能树</text>
+    <view class="skill-points">
+      <text class="sp-label">可用技能点：</text>
+      <text class="sp-value">{{skillPoints}}</text>
+    </view>
+  </view>
+
+  <view class="skill-list">
+    <block wx:for="{{skillList}}" wx:for-item="skill" wx:key="key">
+      <view class="skill-card">
+        <view class="skill-card-header" data-skill="{{skill.key}}" bindtap="toggleExpand">
+          <view class="skill-card-left">
+            <text class="skill-emoji">{{skill.emoji}}</text>
+            <view class="skill-card-info">
+              <text class="skill-name">{{skill.name}}</text>
+              <text class="skill-progress">Lv.{{skill.learned}} / Lv.{{skill.maxLevel}}</text>
+            </view>
+          </view>
+          <text class="expand-arrow">{{expandedSkill === skill.key ? '^' : 'v'}}</text>
+        </view>
+
+        <view wx:if="{{expandedSkill === skill.key}}" class="skill-levels">
+          <block wx:for="{{skill.levels}}" wx:for-item="lv" wx:key="level">
+            <view class="skill-level {{lv.learned ? 'learned' : ''}} {{lv.current ? 'current' : ''}} {{lv.locked ? 'locked' : ''}}">
+              <view class="level-dot {{lv.learned ? 'dot-done' : lv.current ? 'dot-current' : 'dot-locked'}}">
+                <text wx:if="{{lv.learned}}">OK</text>
+                <text wx:elif="{{lv.current}}">+</text>
+              </view>
+              <view class="level-info">
+                <text class="level-name">{{lv.name}}</text>
+                <text class="level-desc">{{lv.desc}}</text>
+              </view>
+              <view wx:if="{{lv.current}}" class="level-action">
+                <text class="level-cost">{{lv.cost}} 点</text>
+                <button class="learn-btn" data-skill="{{skill.key}}" bindtap="onLearnSkill">学习</button>
+              </view>
+              <view wx:elif="{{lv.learned}}" class="level-done-tag">
+                <text>已掌握</text>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>
