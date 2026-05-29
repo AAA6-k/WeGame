@@ -1,0 +1,282 @@
+/* pages/index/index.wxss */
+.farm-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #E8F5E9, #F1F8E9, #DCEDC8);
+  padding: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 状态栏 */
+.status-bar {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6rpx 16rpx rgba(46, 125, 50, 0.3);
+  margin-bottom: 10rpx;
+}
+
+.status-left { display: flex; align-items: center; gap: 20rpx; font-size: 26rpx; font-weight: bold; }
+.status-gold, .status-seeds, .status-level { display: flex; align-items: center; }
+.status-right { flex: 1; margin-left: 20rpx; }
+.exp-wrapper { text-align: right; }
+.exp-text { font-size: 20rpx; opacity: 0.9; display: block; margin-bottom: 4rpx; }
+.exp-bar {
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+.exp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFEB3B, #FFC107);
+  border-radius: 4rpx;
+  transition: width 0.5s;
+}
+
+/* 轻量通知条 */
+.notify-bar {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 14rpx 24rpx;
+  border-radius: 24rpx;
+  margin-bottom: 10rpx;
+  animation: notifySlideIn 0.3s ease-out;
+}
+.notify-icon { font-size: 32rpx; }
+.notify-text { font-size: 26rpx; color: #FFF; font-weight: bold; }
+@keyframes notifySlideIn {
+  0% { opacity: 0; transform: translateY(-20rpx); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 操作按钮栏 */
+.action-bar {
+  display: flex;
+  background: white;
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+.action-btn {
+  flex: 1; text-align: center;
+  padding: 16rpx 8rpx;
+  border-radius: 12rpx;
+  font-size: 24rpx; font-weight: bold;
+  color: #757575;
+  transition: all 0.2s;
+}
+.action-btn.action-active {
+  background: linear-gradient(135deg, #FF9800, #F57C00);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(245, 124, 0, 0.3);
+}
+.action-btn:active { transform: scale(0.95); }
+
+/* 种子选择弹窗 */
+.seed-picker-overlay {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.seed-picker {
+  background: white; border-radius: 20rpx;
+  width: 80%; max-width: 600rpx;
+  padding: 30rpx; box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.2);
+}
+.picker-title {
+  font-size: 32rpx; font-weight: bold; color: #4CAF50;
+  text-align: center; margin-bottom: 20rpx; display: block;
+}
+.picker-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx; margin-bottom: 20rpx;
+}
+.picker-item {
+  background: #F1F8E9; border-radius: 12rpx;
+  padding: 20rpx; text-align: center;
+  transition: all 0.2s;
+}
+.picker-item:active { background: #DCEDC8; transform: scale(0.95); }
+.picker-emoji { font-size: 40rpx; display: block; margin-bottom: 6rpx; }
+.picker-name { font-size: 22rpx; color: #333; }
+.picker-close {
+  background: #E0E0E0; color: #757575;
+  text-align: center; padding: 16rpx;
+  border-radius: 12rpx; font-size: 26rpx; font-weight: bold;
+}
+
+/* 土地区域 */
+.land-section { margin-bottom: 20rpx; }
+.section-title {
+  font-size: 30rpx; font-weight: bold; color: #2E7D32;
+  margin-bottom: 10rpx; display: block;
+}
+.land-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12rpx;
+}
+.land-cell {
+  background: white; border-radius: 16rpx;
+  height: 160rpx; position: relative;
+  overflow: hidden; box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  transition: all 0.2s;
+}
+.land-cell:active { transform: scale(0.95); }
+.land-cell.land-locked { background: linear-gradient(135deg, #F5F5F5, #E0E0E0); }
+.land-cell.land-unpurchased { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+.land-cell.land-mature { background: linear-gradient(135deg, #FFF8E1, #FFECB3); }
+.land-cell.land-selected { box-shadow: 0 0 0 3rpx #FF9800; }
+
+.land-locked-overlay {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 2; border-radius: 16rpx;
+}
+.land-buy-overlay { background: rgba(255, 152, 0, 0.7); }
+.lock-icon { font-size: 40rpx; color: #FFF; }
+.lock-text { font-size: 20rpx; color: #FFF; margin-top: 6rpx; font-weight: bold; }
+
+.land-content {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.land-empty-content { color: #8D6E63; }
+.land-empty-icon { font-size: 50rpx; display: block; margin-bottom: 6rpx; }
+.land-empty-text { font-size: 20rpx; }
+
+.crop-stage { text-align: center; }
+.crop-emoji { font-size: 50rpx; display: block; margin-bottom: 6rpx; }
+.stage-label { font-size: 20rpx; color: #666; display: block; }
+.harvest-label { color: #FF6F00; font-weight: bold; }
+
+.progress-bar {
+  width: 80rpx; height: 6rpx;
+  background: #E0E0E0; border-radius: 3rpx;
+  margin-top: 6rpx; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: #4CAF50;
+  border-radius: 3rpx; transition: width 0.5s;
+}
+
+.water-icon {
+  position: absolute; top: 6rpx; right: 6rpx;
+  font-size: 24rpx; color: #2196F3;
+}
+
+/* 动物区域 */
+.animal-section {
+  background: white; border-radius: 20rpx;
+  padding: 20rpx; margin-top: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
+}
+.animal-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx; margin: 10rpx 0;
+}
+.animal-card {
+  background: #F1F8E9; border-radius: 16rpx;
+  padding: 20rpx; text-align: center;
+  position: relative; transition: all 0.2s;
+}
+.animal-card.animal-ready { background: linear-gradient(135deg, #FFF8E1, #FFECB3); }
+.animal-card:active { transform: scale(0.95); }
+.animal-emoji { font-size: 50rpx; display: block; margin-bottom: 6rpx; }
+.animal-name { font-size: 24rpx; font-weight: bold; color: #333; display: block; }
+
+.animal-badge {
+  position: absolute; top: 8rpx; right: 8rpx;
+  background: #FF9800; color: white;
+  padding: 4rpx 8rpx; border-radius: 8rpx;
+  font-size: 18rpx; font-weight: bold;
+}
+.animal-status { margin-top: 6rpx; }
+.animal-status-text { font-size: 20rpx; color: #757575; }
+
+.animal-tip {
+  background: #E3F2FD; color: #1565C0;
+  padding: 12rpx; border-radius: 10rpx;
+  font-size: 20rpx; text-align: center;
+  margin-top: 10rpx;
+}
+
+/* 动画 */
+.sprout-grow { animation: growPulse 1.5s infinite; }
+.growing-sway { animation: sway 2s infinite; }
+.mature-bounce { animation: bounce 1s infinite; }
+
+@keyframes growPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10rpx); }
+}
+
+/* 变异作物金色光效 */
+.mutated-glow {
+  animation: mutatedPulse 1s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.05) 60%, transparent 100%);
+  border-radius: 12rpx;
+  box-shadow: 0 0 20rpx rgba(255, 215, 0, 0.4), inset 0 0 12rpx rgba(255, 215, 0, 0.2);
+}
+@keyframes mutatedPulse {
+  0%, 100% { box-shadow: 0 0 16rpx rgba(255, 215, 0, 0.35), inset 0 0 8rpx rgba(255, 215, 0, 0.15); }
+  50% { box-shadow: 0 0 32rpx rgba(255, 215, 0, 0.65), inset 0 0 18rpx rgba(255, 215, 0, 0.35); }
+}
+
+/* 金币飞入特效 */
+.coin-animation {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
+  animation: coinFly 0.9s ease-out forwards;
+}
+.coin-animation .coin-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FF8F00;
+  text-shadow: 0 2rpx 6rpx rgba(255, 143, 0, 0.4);
+}
+@keyframes coinFly {
+  0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+  30%  { opacity: 1; transform: translate(var(--arc-x), var(--arc-y)) scale(1.3); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.5); }
+}
+
+/* 经验飞入特效 */
+.exp-animation {
+  position: fixed;
+  z-index: 100;
+  pointer-events: none;
+  animation: expFly 0.9s ease-out forwards;
+}
+.exp-animation .exp-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #FFC107;
+  text-shadow: 0 2rpx 6rpx rgba(255, 193, 7, 0.4);
+}
+@keyframes expFly {
+  0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+  30%  { opacity: 1; transform: translate(var(--arc-x), var(--arc-y)) scale(1.3); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.5); }
+}

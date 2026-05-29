@@ -1,0 +1,188 @@
+/* pages/shop/shop.wxss */
+.shop-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFECB3, #FFF8E1, #FFE0B2);
+  padding: 20rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 状态栏 */
+.status-bar {
+  background: linear-gradient(135deg, #FF8F00, #FF6F00);
+  color: #FFF8E1;
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 6rpx 16rpx rgba(255, 111, 0, 0.3);
+  margin-bottom: 10rpx;
+}
+
+.status-item { display: flex; align-items: center; font-size: 26rpx; font-weight: bold; }
+.status-icon { font-size: 36rpx; margin-right: 6rpx; }
+.status-value { font-size: 26rpx; }
+
+/* Tab 切换栏 */
+.tab-bar {
+  display: flex;
+  background: white;
+  border-radius: 16rpx;
+  padding: 8rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 8rpx;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #757575;
+  transition: all 0.2s;
+}
+
+.tab-item.tab-active {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(46, 125, 50, 0.3);
+}
+
+/* 商店标题 */
+.shop-header { text-align: center; margin: 16rpx 0; }
+.shop-title { font-size: 36rpx; font-weight: bold; color: #E65100; display: block; }
+.shop-subtitle { font-size: 20rpx; color: #FF8F00; margin-top: 6rpx; display: block; }
+
+/* 种子列表 */
+.seed-shop-list { margin: 10rpx 0; }
+
+.shop-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.shop-card.locked-card { background: linear-gradient(135deg, #F5F5F5, #E0E0E0); color: #9E9E9E; }
+
+.lock-overlay {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 2; border-radius: 20rpx;
+}
+.lock-icon { font-size: 50rpx; color: #FFF; }
+.lock-text { font-size: 22rpx; color: #FFF; margin-top: 8rpx; font-weight: bold; }
+
+.shop-card-left { display: flex; align-items: center; flex: 1; }
+.shop-crop-emoji { font-size: 60rpx; margin-right: 20rpx; }
+.shop-crop-info { flex: 1; }
+.shop-crop-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
+.shop-crop-detail { font-size: 22rpx; color: #757575; display: block; margin-top: 2rpx; }
+
+.shop-card-right { display: flex; flex-direction: column; align-items: center; margin-left: 20rpx; }
+.shop-price { display: flex; align-items: center; margin-bottom: 10rpx; }
+.price-icon { font-size: 30rpx; margin-right: 4rpx; }
+.price-value { font-size: 28rpx; font-weight: bold; color: #FF6F00; }
+
+.btn-buy {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  padding: 12rpx 24rpx;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  text-align: center;
+  min-width: 100rpx;
+  box-shadow: 0 4rpx 12rpx rgba(46, 125, 50, 0.3);
+  transition: all 0.2s;
+}
+.btn-buy.disabled { background: linear-gradient(135deg, #BDBDBD, #9E9E9E); color: #757575; box-shadow: none; }
+.btn-buy:active { transform: scale(0.95); }
+
+.btn-max {
+  background: #E0E0E0;
+  color: #9E9E9E;
+  padding: 12rpx 24rpx;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  text-align: center;
+  min-width: 100rpx;
+}
+
+/* 工具列表 */
+.tool-list { margin: 10rpx 0; }
+
+.tool-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tool-left { display: flex; align-items: center; flex: 1; }
+.tool-emoji { font-size: 60rpx; margin-right: 20rpx; }
+.tool-info { flex: 1; }
+.tool-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
+.tool-desc { font-size: 22rpx; color: #757575; display: block; margin-top: 2rpx; }
+.tool-level { font-size: 22rpx; color: #4CAF50; display: block; margin-top: 4rpx; font-weight: bold; }
+
+.tool-right { display: flex; flex-direction: column; align-items: center; margin-left: 20rpx; }
+.tool-price { display: flex; align-items: center; margin-bottom: 10rpx; }
+
+/* 土地列表 */
+.land-list { margin: 10rpx 0; }
+
+.land-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.land-card.locked-card { background: linear-gradient(135deg, #F5F5F5, #E0E0E0); }
+
+.land-left { display: flex; align-items: center; flex: 1; }
+.land-emoji { font-size: 60rpx; margin-right: 20rpx; }
+.land-info { flex: 1; }
+.land-name { font-size: 32rpx; font-weight: bold; color: #333; display: block; }
+.land-desc { font-size: 22rpx; color: #757575; display: block; margin-top: 2rpx; }
+
+.land-right { display: flex; flex-direction: column; align-items: center; margin-left: 20rpx; }
+.land-price { display: flex; align-items: center; margin-bottom: 10rpx; }
+
+/* 动物商店列表 */
+.animal-shop-list { margin: 10rpx 0; }
+
+/* 动画 */
+.slide-in-up {
+  animation: slideInUp 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30rpx);
+}
+
+@keyframes slideInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
