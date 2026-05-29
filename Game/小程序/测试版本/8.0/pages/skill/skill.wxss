@@ -1,0 +1,224 @@
+.skill-page {
+  min-height: 100vh;
+  background: #1a1a2e;
+  padding-bottom: 40rpx;
+}
+
+.skill-header {
+  padding: 30rpx 30rpx 20rpx;
+  background: linear-gradient(135deg, #16213e, #0f3460);
+}
+
+.skill-header-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #e0e0e0;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.skill-points {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20rpx;
+  padding: 12rpx 24rpx;
+  width: fit-content;
+}
+
+.sp-label {
+  font-size: 26rpx;
+  color: #aaa;
+}
+
+.sp-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FFD700;
+  margin-left: 8rpx;
+}
+
+/* 技能点来源 */
+.sp-sources {
+  margin: 20rpx 24rpx;
+  background: #16213e;
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+  border: 2rpx solid #0f3460;
+}
+
+.sp-source-item {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+}
+
+.sp-source-item + .sp-source-item {
+  border-top: 1rpx solid #0f3460;
+}
+
+.sp-source-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+  width: 40rpx;
+  text-align: center;
+}
+
+.sp-source-text {
+  font-size: 24rpx;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.skill-list {
+  padding: 20rpx 24rpx;
+}
+
+.skill-card {
+  background: #16213e;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  border: 2rpx solid #0f3460;
+}
+
+.skill-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 28rpx;
+}
+
+.skill-card-left {
+  display: flex;
+  align-items: center;
+}
+
+.skill-emoji {
+  font-size: 48rpx;
+  margin-right: 20rpx;
+}
+
+.skill-card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #e0e0e0;
+}
+
+.skill-progress {
+  font-size: 24rpx;
+  color: #888;
+  margin-top: 4rpx;
+}
+
+.expand-arrow {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.skill-levels {
+  border-top: 1rpx solid #0f3460;
+  padding: 16rpx 0;
+}
+
+.skill-level {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 28rpx;
+  position: relative;
+}
+
+.skill-level.locked {
+  opacity: 0.4;
+}
+
+.level-dot {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.dot-done {
+  background: #4CAF50;
+  color: #fff;
+}
+
+.dot-current {
+  background: #FFD700;
+  color: #1a1a2e;
+}
+
+.dot-locked {
+  background: #333;
+  color: #666;
+  border: 2rpx solid #444;
+}
+
+.level-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.level-name {
+  font-size: 28rpx;
+  color: #e0e0e0;
+  font-weight: bold;
+}
+
+.level-desc {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.level-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.level-cost {
+  font-size: 22rpx;
+  color: #FFD700;
+  margin-bottom: 6rpx;
+}
+
+.learn-btn {
+  background: linear-gradient(135deg, #FFD700, #FFA000);
+  color: #1a1a2e;
+  font-size: 24rpx;
+  font-weight: bold;
+  padding: 8rpx 24rpx;
+  border-radius: 20rpx;
+  border: none;
+  line-height: 1.4;
+}
+
+.learn-btn::after {
+  border: none;
+}
+
+.level-done-tag {
+  flex-shrink: 0;
+}
+
+.level-done-tag text {
+  font-size: 22rpx;
+  color: #4CAF50;
+  background: rgba(76,175,80,0.15);
+  padding: 6rpx 16rpx;
+  border-radius: 12rpx;
+}

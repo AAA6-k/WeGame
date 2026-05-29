@@ -1,0 +1,96 @@
+<!--pages/kitchen/kitchen.wxml-->
+<view class="kitchen-page">
+  <!-- 页签 -->
+  <view class="tabs">
+    <view class="tab {{tab==='cook'?'active':''}}" data-tab="cook" bindtap="switchTab">烹饪</view>
+    <view class="tab {{tab==='inventory'?'active':''}}" data-tab="inventory" bindtap="switchTab">库存</view>
+    <view class="tab {{tab==='orders'?'active':''}}" data-tab="orders" bindtap="switchTab">订单</view>
+  </view>
+
+  <!-- 烹饪页签 -->
+  <view class="tab-content" wx:if="{{tab==='cook'}}">
+    <view class="recipe-grid">
+      <view class="recipe-card {{selectedRecipe===id?'selected':''}} {{data.level<recipe.unlockLevel?'locked':''}}" 
+            wx:for="{{cookingRecipes}}" wx:key="*this" wx:for-index="id" wx:for-item="recipe"
+            data-id="{{id}}" bindtap="selectRecipe">
+        <view class="recipe-emoji">{{recipe.emoji}}</view>
+        <view class="recipe-name">{{recipe.name}}</view>
+        <view class="recipe-lv" wx:if="{{data.level<recipe.unlockLevel}}">需要Lv.{{recipe.unlockLevel}}</view>
+      </view>
+    </view>
+
+    <view class="recipe-detail" wx:if="{{selectedRecipe}}">
+      <view class="detail-header">
+        <text class="detail-emoji">{{cookingRecipes[selectedRecipe].emoji}}</text>
+        <text class="detail-name">{{cookingRecipes[selectedRecipe].name}}</text>
+        <text class="detail-lv">Lv.{{cookingRecipes[selectedRecipe].unlockLevel}}</text>
+      </view>
+      <view class="detail-info">
+        <view class="info-row" wx:for="{{cookingRecipes[selectedRecipe].ingredients}}" wx:for-index="crop" wx:for-item="need" wx:key="*this">
+          <text class="info-label">{{cropConfig[crop].name}}:</text>
+          <text class="info-val {{inventory[crop]>=need?'enough':'lack'}}">{{inventory[crop]||0}} / {{need}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">金币:</text>
+          <text class="info-val {{gold>=cookingRecipes[selectedRecipe].cost?'enough':'lack'}}">{{gold}} / {{cookingRecipes[selectedRecipe].cost}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">售价:</text>
+          <text class="info-val price">{{cookingRecipes[selectedRecipe].price}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">经验:</text>
+          <text class="info-val">{{cookingRecipes[selectedRecipe].expReward}}</text>
+        </view>
+      </view>
+      <button class="cook-btn" bindtap="cook">制作 {{cookingRecipes[selectedRecipe].emoji}} {{cookingRecipes[selectedRecipe].name}}</button>
+    </view>
+  </view>
+
+  <!-- 库存页签 -->
+  <view class="tab-content" wx:if="{{tab==='inventory'}}">
+    <view class="inventory-list" wx:if="{{inventoryList.length>0}}">
+      <view class="inv-item" wx:for="{{inventoryList}}" wx:key="key">
+        <view class="inv-icon">
+          <text class="inv-emoji">{{item.emoji}}</text>
+        </view>
+        <view class="inv-name">
+          <text>{{item.emoji}} {{item.name}}</text>
+        </view>
+        <view class="inv-count">×{{item.count}}</view>
+        <view class="inv-sell" data-key="{{item.key}}" data-count="{{item.count}}" bindtap="sellOne">出售</view>
+      </view>
+    </view>
+    <view class="empty-tip" wx:else>
+      <text>库存空空如也～收获作物、制作烹饪品后就会显示在这里。</text>
+    </view>
+  </view>
+
+  <!-- 订单页签 -->
+  <view class="tab-content" wx:if="{{tab==='orders'}}">
+    <view class="order-header">
+      <text class="order-timer">下次刷新: {{orderTimeLeft>0?orderTimeLeft+'分钟':'可刷新'}}</text>
+      <button class="refresh-btn" bindtap="refreshOrders" disabled="{{!orderCanRefresh}}">刷新订单</button>
+    </view>
+    <view class="order-list" wx:if="{{orders.length>0}}">
+      <view class="order-card {{item.completed?'completed':''}}" wx:for="{{orders}}" wx:key="id" wx:for-item="item">
+        <view class="order-info">
+          <view class="order-title">
+            <text wx:if="{{item.itemType==='cooked'}}">{{cookingRecipes[item.itemId].emoji}} {{cookingRecipes[item.itemId].name}} x{{item.count}}</text>
+            <text wx:else>{{cropConfig[item.itemId].emoji}} {{cropConfig[item.itemId].name}} x{{item.count}}</text>
+          </view>
+          <view class="order-reward">
+            <text class="reward-exp">经验+{{item.rewardExp}}</text>
+            <text class="reward-skill" wx:if="{{item.rewardSkill>0}}">技能点+{{item.rewardSkill}}</text>
+          </view>
+        </view>
+        <button class="order-btn" disabled="{{item.completed}}" data-id="{{item.id}}" bindtap="completeOrder">
+          {{item.completed?'已完成':'提交'}}
+        </button>
+      </view>
+    </view>
+    <view class="empty-tip" wx:else>
+      <text>暂无订单，点击「刷新订单」领取新任务。</text>
+    </view>
+  </view>
+</view>

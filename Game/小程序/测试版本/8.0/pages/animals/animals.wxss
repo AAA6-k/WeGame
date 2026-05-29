@@ -1,0 +1,124 @@
+/* pages/animals/animals.wxss */
+.animals-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FCE4EC, #FFF3E0, #FFF8E1);
+  padding: 20rpx;
+}
+
+.status-bar {
+  background: linear-gradient(135deg, #E91E63, #AD1457);
+  color: white; padding: 16rpx 20rpx; border-radius: 16rpx;
+  display: flex; justify-content: space-around;
+  font-size: 26rpx; font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.section-header {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 10rpx;
+}
+.section-title { font-size: 30rpx; font-weight: bold; color: #AD1457; }
+.btn-buy-animal {
+  background: linear-gradient(135deg, #E91E63, #AD1457);
+  color: white; padding: 12rpx 20rpx; border-radius: 10rpx;
+  font-size: 22rpx; font-weight: bold;
+}
+
+.empty-state {
+  text-align: center; padding: 80rpx 0;
+  color: #757575;
+}
+.empty-icon { font-size: 80rpx; display: block; margin-bottom: 16rpx; }
+.empty-text { font-size: 32rpx; font-weight: bold; display: block; margin-bottom: 8rpx; }
+.empty-hint { font-size: 22rpx; display: block; }
+
+.animal-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx; margin: 10rpx 0;
+}
+.animal-card {
+  background: white; border-radius: 20rpx;
+  padding: 20rpx; text-align: center;
+  position: relative; box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
+  transition: all 0.2s;
+}
+.animal-card.ready { background: linear-gradient(135deg, #FFF8E1, #FFECB3); }
+.animal-card:active { transform: scale(0.95); }
+
+.ready-badge {
+  position: absolute; top: 8rpx; right: 8rpx;
+  background: #FF6F00; color: white;
+  padding: 4rpx 10rpx; border-radius: 8rpx;
+  font-size: 18rpx; font-weight: bold;
+}
+
+.animal-emoji { font-size: 60rpx; display: block; margin-bottom: 6rpx; }
+.animal-name { font-size: 28rpx; font-weight: bold; color: #333; display: block; }
+
+.animal-progress { margin-top: 8rpx; }
+.progress-label { font-size: 18rpx; color: #757575; display: block; margin-bottom: 4rpx; }
+.progress-bar {
+  width: 80%; height: 6rpx; background: #E0E0E0;
+  border-radius: 3rpx; margin: 0 auto; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, #4CAF50, #2E7D32);
+  border-radius: 3rpx; transition: width 1s linear;
+}
+.progress-time { font-size: 18rpx; color: #4CAF50; margin-top: 4rpx; display: block; }
+
+.animal-need-feed { margin-top: 8rpx; }
+.need-feed-text {
+  font-size: 22rpx; color: #E91E63; font-weight: bold;
+  background: #FCE4EC; padding: 6rpx 16rpx; border-radius: 8rpx; display: inline-block;
+}
+.animal-ready-text { margin-top: 8rpx; font-size: 22rpx; color: #FF6F00; font-weight: bold; }
+
+/* 购买区域 */
+.buy-section {
+  background: white; border-radius: 20rpx;
+  padding: 20rpx; margin-top: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.1);
+}
+.buy-title { font-size: 28rpx; font-weight: bold; color: #AD1457; display: block; }
+.buy-subtitle { font-size: 20rpx; color: #999; margin-bottom: 16rpx; display: block; }
+
+.buy-card {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #F1F8E9; border-radius: 16rpx;
+  padding: 16rpx; margin-bottom: 12rpx;
+  position: relative; overflow: hidden;
+}
+.buy-card.locked { background: #F5F5F5; }
+.buy-lock {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2; border-radius: 16rpx;
+  color: white; font-size: 24rpx; font-weight: bold;
+}
+
+.buy-left { display: flex; align-items: center; flex: 1; }
+.buy-emoji { font-size: 50rpx; margin-right: 16rpx; }
+.buy-info { flex: 1; }
+.buy-name { font-size: 28rpx; font-weight: bold; color: #333; display: block; }
+.buy-detail { font-size: 20rpx; color: #757575; display: block; margin-top: 2rpx; }
+
+.buy-right { display: flex; flex-direction: column; align-items: center; margin-left: 20rpx; }
+.buy-price-row { display: flex; align-items: center; margin-bottom: 8rpx; }
+.price-icon { font-size: 28rpx; margin-right: 4rpx; }
+.price-value { font-size: 26rpx; font-weight: bold; color: #FF6F00; }
+.buy-btn {
+  background: linear-gradient(135deg, #E91E63, #AD1457);
+  color: white; padding: 10rpx 24rpx; border-radius: 10rpx;
+  font-size: 24rpx; font-weight: bold;
+}
+.buy-btn.disabled { background: #BDBDBD; color: #757575; }
+
+.bottom-nav {
+  text-align: center; margin-top: 30rpx;
+  padding: 16rpx; background: white;
+  border-radius: 12rpx; color: #E91E63;
+  font-size: 24rpx; font-weight: bold;
+}
